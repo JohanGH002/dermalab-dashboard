@@ -1331,6 +1331,22 @@ function loadSettings(event){
 refreshParentSelect();
 renderCustomCatPills();
 renderSubPills();
+
+// ── Init: wait for Chart.js to be available ───────────────────────
+function initDashboard(){
+  if(typeof Chart === 'undefined'){
+    // Chart.js not ready yet — retry in 100ms
+    setTimeout(initDashboard, 100);
+    return;
+  }
+  renderOv();
+}
+
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', initDashboard);
+} else {
+  initDashboard();
+}
 </script>
 </body>
 </html>
